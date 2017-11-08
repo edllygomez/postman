@@ -1,0 +1,140 @@
+{
+	"info": {
+		"name": "Open API V2 endpoints",
+		"_postman_id": "c1daf64f-06b6-17a3-8b9c-8d4a24e37a34",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Session",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"postman.clearEnvironmentVariable(\"token\");",
+							"",
+							"var body = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"token\", body.data.attributes.token);",
+							"",
+							"",
+							"",
+							"tests[\"Successful session created\"] = responseCode.code === 201;"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"console.log(\"username\" + data.username)"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"credentials\":\n  {\n  \"login\":\"{{username}}\",\n  \"password\":\"{{password}}\" \n  }\n}"
+				},
+				"url": {
+					"raw": "{{url}}sessions",
+					"host": [
+						"{{url}}sessions"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Initiatives",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200, initiatives retrieved\"] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					},
+					{
+						"key": "",
+						"value": ""
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{url}}initiatives",
+					"host": [
+						"{{url}}initiatives"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Metric Definition",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200, metric information retrieved\"] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "{{url}}metric_def/{{metric_id}}/data?location_path={{location_path}}",
+					"host": [
+						"{{url}}metric_def"
+					],
+					"path": [
+						"{{metric_id}}",
+						"data"
+					],
+					"query": [
+						{
+							"key": "location_path",
+							"value": "{{location_path}}\n",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
