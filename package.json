@@ -1,8 +1,7 @@
 {
-  "name": "postman",
-  "version": "1.0.0",
-  "description": "",
+  "name": "LoadAgent",
+  "description": "Load agent",
   "dependencies": {
-    "newman": "3.8.3"
+    "newman" : "*"
   }
 }

@@ -1,0 +1,84 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Redline13",
+		"_postman_id": "980f9d9b-56c6-6b4b-3a5a-372acea501cb",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Session",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"try {",
+							"    postman.clearEnvironmentVariable(\"token\");",
+							"    var body = JSON.parse(responseBody);",
+							"    postman.setEnvironmentVariable(\"token\", body.data.attributes.token);",
+							"}",
+							"catch (e) { }",
+							"",
+							"",
+							"",
+							"tests[\"Successful POST request\"] = responseCode.code === 201;"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}sessions",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"credentials\":\n  {\n  \"login\":\"{{username}}\",\n  \"password\":\"{{password}}\" \n  }\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Initiatives",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{url}}initiatives",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"description": ""
+					},
+					{
+						"key": "",
+						"value": "",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
